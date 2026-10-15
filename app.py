@@ -108,7 +108,7 @@ def run_vault_pipeline():
 
 
 # --- GUI DESIGN INTERFACE LAYER (Layout) ---
-mport re
+import re
 import streamlit as st
 
 st.set_page_config(page_title="Data Sovereign Shield", page_icon="🔒")
