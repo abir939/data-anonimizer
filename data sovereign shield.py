@@ -107,28 +107,30 @@ def run_vault_pipeline():
         log_box.insert(tk.END, f"[FATAL ERR] Ledger registry failure: {ledger_error}\n")
 
 
-# --- GUI DESIGN INTERFACE LAYER (Tkinter Layout) ---
-app = tk.Tk()
-app.title("Sovereign Data Shield - Level 5 Dashboard")
-app.geometry("650x500")
-app.configure(bg="#f4f6f9")
+# --- GUI DESIGN INTERFACE LAYER (Layout) ---
+mport re
+import streamlit as st
 
-title_label = tk.Label(app, text="SOVEREIGN DATA SHIELD", font=("Helvetica", 16, "bold"), fg="#1e293b", bg="#f4f6f9")
-title_label.pack(pady=10)
+st.set_page_config(page_title="Data Sovereign Shield", page_icon="🔒")
 
-subtitle_label = tk.Label(app, text="Law 18-07 Compliant Cryptographic Tokenization", font=("Helvetica", 10, "italic"), fg="#64748b", bg="#f4f6f9")
-subtitle_label.pack(pady=2)
+st.title("🔒 Data Sovereign Shield")
+st.subheader("Outil d'Anonymisation de Données Cliniques")
 
-# Blue Action Trigger Button
-process_btn = tk.Button(app, text="LAUNCH BATCH VAULT PIPELINE", font=("Helvetica", 11, "bold"), bg="#2563eb", fg="white", activebackground="#1d4ed8", activeforeground="white", padx=20, pady=10, relief="raised", cursor="hand2", command=run_vault_pipeline)
-process_btn.pack(pady=15)
+# --- YOUR ANONYMIZATION REGEX FUNCTION HERE ---
+def anonymize_text(text):
+    # Place your existing regex substitution rules here
+    # Example:
+    # text = re.sub(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', '[EMAIL ANONYMISÉ]', text)
+    return text
 
-log_frame_label = tk.Label(app, text="Live Pipeline Operations Log Monitor:", font=("Helvetica", 10, "bold"), fg="#475569", bg="#f4f6f9")
-log_frame_label.pack(anchor="w", padx=25, pady=2)
+# --- STREAMLIT UI ---
+user_input = st.text_area("Entrez le texte ou les données cliniques à anonymiser :", height=200)
 
-# Dark Terminal Display Frame inside your App
-log_box = scrolledtext.ScrolledText(app, width=72, height=18, font=("Courier New", 10), bg="#0f172a", fg="#38bdf8", insertbackground="white")
-log_box.pack(pady=5, padx=20)
-log_box.insert(tk.END, "System Ready. Click the action button above to process data sources...\n")
+if st.button("Anonymiser les données"):
+    if user_input.strip():
+        result = anonymize_text(user_input)
+        st.success("Anonymisation effectuée avec succès !")
+        st.text_area("Résultat Anonymisé :", value=result, height=200)
+    else:
+        st.warning("Veuillez saisir du texte.")
 
-app.mainloop()
